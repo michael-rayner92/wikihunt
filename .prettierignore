@@ -1,0 +1,7 @@
+/dist
+/coverage
+/.husky
+/.idea
+/.next
+/.github
+/.vscode

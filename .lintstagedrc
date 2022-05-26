@@ -1,0 +1,4 @@
+{
+   "*.(ts|tsx)": ["yarn eslint --cache --fix"],
+    "*": ["prettier --write --ignore-unknown"]
+}
