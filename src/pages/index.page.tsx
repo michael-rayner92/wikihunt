@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
-import type { NextPage } from 'next';
-import Head from 'next/head';
 import { wikiApi } from '@services/wikiApi';
 import type { WikiPageContent, WikiRandomPagesListItem } from '@services/wikiApi';
+import type { NextPage } from 'next';
 
 const Home: NextPage = () => {
   const [pages, setPages] = useState<WikiRandomPagesListItem[]>([]);
@@ -41,28 +40,17 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <Head>
-        <title>WikiHunt</title>
-        <meta
-          name="description"
-          content="Hunt your way through Wikipedia links to find Kevin Bacon"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <h1>WikiHunt 🔎</h1>
 
-      <main>
-        <h1>WikiHunt 🔎</h1>
+      <ul>
+        {pages.map(pageData => (
+          <li key={pageData.id} onClick={e => onPageClick(e, pageData)}>
+            {pageData.title}
+          </li>
+        ))}
+      </ul>
 
-        <ul>
-          {pages.map(pageData => (
-            <li key={pageData.id} onClick={e => onPageClick(e, pageData)}>
-              {pageData.title}
-            </li>
-          ))}
-        </ul>
-
-        <div>{JSON.stringify(page)}</div>
-      </main>
+      <div>{JSON.stringify(page)}</div>
     </div>
   );
 };

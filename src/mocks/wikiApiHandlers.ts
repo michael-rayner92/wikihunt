@@ -3,7 +3,7 @@ import { globalEnvs } from '@config/globals';
 import { generator } from '@utils/test-utils/generators';
 
 export const wikiApiHandlers = [
-  rest.get(globalEnvs.wikipediaApiBaseURL, (req, res, ctx) => {
+  rest.get(globalEnvs.apis.wikipediaApiBaseURL, (req, res, ctx) => {
     const actionParam = req.url.searchParams.get('action');
 
     if (actionParam === 'query') {
