@@ -40,6 +40,8 @@ const Home: NextPage = () => {
 
   return (
     <div>
+      <h1>WikiHunt 🔎</h1>
+
       <ul>
         {pages.map(pageData => (
           <li key={pageData.id} onClick={e => onPageClick(e, pageData)}>
