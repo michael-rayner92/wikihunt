@@ -35,7 +35,10 @@
     },
     "conventionalCommits.scopes": [
         "setup",
-        "api"
+        "api",
+        "ui",
+        "component",
+        "logic"
     ],
     "workbench.colorCustomizations": {
       "activityBar.activeBackground": "#1f6fd0",
