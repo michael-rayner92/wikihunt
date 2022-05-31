@@ -28,7 +28,8 @@ const initialState: PageManagerState = {
 export const PageManagerContext = createContext({
   ...initialState,
   getPage: async (title: string) => {},
-  getPages: async () => {}
+  getPages: async () => {},
+  resetPages: async () => {}
 });
 PageManagerContext.displayName = 'PageManager';
 
@@ -66,6 +67,18 @@ export const PageManagerProvider: FC<{ children: ReactNode }> = ({ children }) =
     }
   }
 
+  async function resetPages() {
+    setSelectedPages([]);
+    setPage(null);
+    setPages([]);
+    setErrorPage('');
+    setErrorPages('');
+    setLoadingPage('idle');
+    setLoadingPages('idle');
+
+    await getPages();
+  }
+
   const state = {
     selectedPages,
     page,
@@ -75,7 +88,8 @@ export const PageManagerProvider: FC<{ children: ReactNode }> = ({ children }) =
     loadingPage,
     loadingPages,
     getPage,
-    getPages
+    getPages,
+    resetPages
   };
 
   return <PageManagerContext.Provider value={state}>{children}</PageManagerContext.Provider>;

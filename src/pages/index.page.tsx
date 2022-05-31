@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Grid, GridItem, SimpleGrid, useDisclosure } from '@chakra-ui/react';
 import { ArticleTracker } from '@components/article-tracker';
 import { ArticleViewer } from '@components/article-viewer';
+import { FailModal } from '@components/fail-modal';
 import { LinkCounter } from '@components/link-counter';
 import { RandomList } from '@components/random-list';
 import { StartInfo } from '@components/start-info';
@@ -26,6 +27,8 @@ const Home: NextPage = () => {
   return (
     <>
       <StartInfo isOpen={modalProps.isOpen} onClose={modalProps.onClose} />
+      <FailModal />
+
       <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: '5', md: '6' }}>
         <LinkCounter />
         <Target />
