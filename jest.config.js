@@ -19,7 +19,7 @@ const customJestConfig = {
   clearMocks: true,
   resetMocks: true,
   moduleNameMapper: {
-    '@components/(.*)$': '<rootDir>/src/components$1',
+    '@components/(.*)$': '<rootDir>/src/components/$1',
     '@config/(.*)$': '<rootDir>/src/config/$1',
     '@layouts/(.*)$': '<rootDir>/src/layouts/$1',
     '@pages/(.*)$': '<rootDir>/src/pages/$1',
