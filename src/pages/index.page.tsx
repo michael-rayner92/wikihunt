@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useDisclosure } from '@chakra-ui/react';
+import { ArticleTracker } from '@components/article-tracker';
 import { ArticleViewer } from '@components/article-viewer';
+import { LinkCounter } from '@components/link-counter';
 import { RandomList } from '@components/random-list';
 import { StartInfo } from '@components/start-info';
 import { Target } from '@components/target';
@@ -20,8 +22,10 @@ const Home: NextPage = () => {
   return (
     <>
       <StartInfo isOpen={modalProps.isOpen} onClose={modalProps.onClose} />
+      <ArticleTracker />
       <RandomList />
       <ArticleViewer />
+      <LinkCounter />
       <Target />
     </>
   );
