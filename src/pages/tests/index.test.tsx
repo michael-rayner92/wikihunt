@@ -1,4 +1,4 @@
-import { render, screen, waitFor, waitForElementToBeRemoved, within } from '@testing-library/react';
+import { render, screen, waitForElementToBeRemoved, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { PageManagerProvider } from '@context/PageManagerContext';
 import Home from '@pages/index.page';
@@ -36,7 +36,7 @@ describe('Page: Home Test Suite', () => {
     });
   });
 
-  describe('After clicking the start button and selecting a starting page option', () => {
+  describe('After clicking the start button', () => {
     it('should load a list of 5 starting options', async () => {
       renderPage();
 
@@ -55,8 +55,10 @@ describe('Page: Home Test Suite', () => {
       const listItems = within(randomPagesList).getAllByRole('listitem');
       expect(listItems).toHaveLength(5);
     });
+  });
 
-    it('should highlight the selected option', async () => {
+  describe('After selecting a starting page option', () => {
+    it('should load the page data for the selected article', async () => {
       renderPage();
 
       // Click start on the starting information modal
@@ -69,7 +71,39 @@ describe('Page: Home Test Suite', () => {
       // Select a list item and check it shows are selected
       const listItem = screen.getByTestId(/random-pages-item-random page 2/i);
       userEvent.click(listItem);
-      await waitFor(() => expect(listItem).toHaveAttribute('aria-selected', 'true'));
+
+      // Check Article Viewer component has rendered with correct data
+      const articleLinkList = await screen.findByRole('list', { name: /article-link-list/i });
+      const articleLinkListTitle = screen.getByTestId('active-link-list-title');
+      expect(articleLinkList).toBeInTheDocument();
+      expect(articleLinkListTitle).toBeInTheDocument();
+    });
+
+    it('should update the article tracker progress and counters', async () => {
+      renderPage();
+
+      // Click start on the starting information modal
+      const startBtn = screen.getByRole('button', { name: /let's play/i });
+      userEvent.click(startBtn);
+
+      // Wait for loading spinner to leave
+      await waitForElementToBeRemoved(() => screen.queryByTestId('loading-pages-spinner'));
+
+      // Select a list item and check it shows are selected
+      const listItem = screen.getByTestId(/random-pages-item-random page 2/i);
+      userEvent.click(listItem);
+
+      // Wait for state to be updated
+      await screen.findByRole('list', { name: /article-link-list/i });
+
+      // Check link counter has updated to 1
+      const linkCount = screen.getByRole('heading', { level: 2, name: '1 / 6' });
+      expect(linkCount).toBeInTheDocument();
+
+      // Check article tracker has updated step 1 to completed
+      const articleTrackerStep1 = screen.getByTestId(/article-tracker-step-article 1/i);
+      expect(articleTrackerStep1).toBeInTheDocument();
+      expect(within(articleTrackerStep1).getByText(/random page 2/i)).toBeInTheDocument();
     });
   });
 });
