@@ -41,13 +41,18 @@
           "caseInsensitive": true
         }
       }
-    ]
+    ],
+    "require-await": "off",
+    "@typescript-eslint/require-await": "off",
+    "@typescript-eslint/no-empty-function": ["error", { "allow": ["arrowFunctions"] }],
+    "@typescript-eslint/no-misused-promises": ["off"]
   },
   "overrides": [
     {
       "files": ["**/*.test.ts", "**/*.tsx"],
       "rules": {
-        "@typescript-eslint/no-unsafe-return": "off"
+        "@typescript-eslint/no-unsafe-return": "off",
+        "@typescript-eslint/no-floating-promises": "off"
       }
     }
   ],
