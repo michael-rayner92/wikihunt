@@ -6,7 +6,7 @@ import { wikiApi } from '@services/wikiApi';
 type LoadingTypes = 'idle' | 'fetching' | 'success' | 'error';
 
 interface PageManagerState {
-  selectedPage: string;
+  selectedPages: string[];
   page: WikiPageContent | null;
   pages: WikiRandomPagesListItem[];
   errorPage: string;
@@ -16,7 +16,7 @@ interface PageManagerState {
 }
 
 const initialState: PageManagerState = {
-  selectedPage: '',
+  selectedPages: [],
   page: null,
   pages: [],
   errorPage: '',
@@ -33,7 +33,7 @@ export const PageManagerContext = createContext({
 PageManagerContext.displayName = 'PageManager';
 
 export const PageManagerProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [selectedPage, setSelectedPage] = useState('');
+  const [selectedPages, setSelectedPages] = useState<string[]>([]);
   const [page, setPage] = useState<WikiPageContent | null>(null);
   const [pages, setPages] = useState<WikiRandomPagesListItem[]>([]);
   const [errorPage, setErrorPage] = useState('');
@@ -56,7 +56,7 @@ export const PageManagerProvider: FC<{ children: ReactNode }> = ({ children }) =
   async function getPage(title: string) {
     try {
       setLoadingPage('fetching');
-      setSelectedPage(title);
+      setSelectedPages(prevState => [...prevState, title]);
       const response = await wikiApi.getPage(title);
       setPage(response);
       setLoadingPage('success');
@@ -67,7 +67,7 @@ export const PageManagerProvider: FC<{ children: ReactNode }> = ({ children }) =
   }
 
   const state = {
-    selectedPage,
+    selectedPages,
     page,
     pages,
     errorPage,

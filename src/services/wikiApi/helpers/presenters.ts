@@ -1,4 +1,9 @@
-import type { WikiPageApiResponse, WikiPageContent, WikiPageProperties } from '../types';
+import type {
+  WikiPageApiResponse,
+  WikiPageContent,
+  WikiPageLink,
+  WikiPageProperties
+} from '../types';
 
 /**
  * Extract short description from wiki page properties
@@ -11,6 +16,20 @@ const getWikiShortDescription = (properties: WikiPageProperties): string => {
 };
 
 /**
+ * Filter out none article results
+ * @param links Wikipedia page links array
+ * @returns Filtered list of link objects
+ */
+export const filterPageLinks = (links: WikiPageLink[]) => {
+  if (!links) return [];
+  return links.filter(link => {
+    if (!link.exists) return false;
+    if (link.ns !== 0) return false;
+    return true;
+  });
+};
+
+/**
  * Format Wikipedia API page response to a consistent object
  * @param data Wikipedia API page response object
  * @returns Structured object with page data
@@ -18,7 +37,7 @@ const getWikiShortDescription = (properties: WikiPageProperties): string => {
 export const presentWikiPageData = (data: WikiPageApiResponse['parse']): WikiPageContent => {
   return {
     title: data.title,
-    links: data.links,
+    links: filterPageLinks(data.links),
     shortDescription: getWikiShortDescription(data.properties)
   };
 };
