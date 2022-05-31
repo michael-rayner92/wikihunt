@@ -8,9 +8,9 @@ interface RandomListItemProps {
 }
 
 export const RandomListItem: FC<RandomListItemProps> = ({ pageData }) => {
-  const { getPage, selectedPage } = usePageManager();
+  const { getPage, selectedPages } = usePageManager();
 
-  const isSelected = selectedPage === pageData.title;
+  const isSelected = selectedPages[0] === pageData.title;
 
   const onSelectHandler = async () => getPage(pageData.title);
 
