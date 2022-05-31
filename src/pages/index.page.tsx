@@ -1,48 +1,33 @@
-import { useEffect, useRef, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import type { MouseEvent } from 'react';
+import { useEffect, useRef } from 'react';
+import { useDisclosure } from '@chakra-ui/react';
 import { StartInfo } from '@components/start-info';
 import { Target } from '@components/target';
-import { wikiApi } from '@services/wikiApi';
-import type { WikiPageContent, WikiRandomPagesListItem } from '@services/wikiApi';
+import { usePageManager } from '@hooks/usePageManager';
+import type { WikiRandomPagesListItem } from '@services/wikiApi';
 import type { NextPage } from 'next';
 
 const Home: NextPage = () => {
-  const [pages, setPages] = useState<WikiRandomPagesListItem[]>([]);
-  const [page, setPage] = useState<WikiPageContent>();
-  const [selectedPage, setSelectedPage] = useState('');
+  const { page, pages, getPage } = usePageManager();
 
-  const onPageClick = (_e: MouseEvent<HTMLLIElement>, el: WikiRandomPagesListItem) => {
-    setSelectedPage(el.title);
+  const modalProps = useDisclosure();
+  const pageInitialised = useRef(false);
+
+  const onPageClick = async (_e: MouseEvent<HTMLLIElement>, el: WikiRandomPagesListItem) => {
+    await getPage(el.title);
   };
 
-  const isLoaded = useRef(false);
-
   useEffect(() => {
-    if (isLoaded.current) return;
+    if (pageInitialised.current) return;
+    pageInitialised.current = true;
 
-    const getRandomPages = async () => {
-      isLoaded.current = true;
-      const response = await wikiApi.getRandomPages();
-      setPages(response);
-    };
-
-    getRandomPages().catch(console.error);
-  }, []);
-
-  useEffect(() => {
-    if (!selectedPage) return;
-
-    const getPage = async () => {
-      const response = await wikiApi.getPage(selectedPage);
-      setPage(response);
-    };
-
-    getPage().catch(console.error);
-  }, [selectedPage]);
+    modalProps.onOpen();
+  }, [modalProps]);
 
   return (
     <>
-      <StartInfo />
+      <StartInfo isOpen={modalProps.isOpen} onClose={modalProps.onClose} />
       <Target />
 
       <ul>
@@ -53,7 +38,7 @@ const Home: NextPage = () => {
         ))}
       </ul>
 
-      <div>{JSON.stringify(page)}</div>
+      <div>{page && JSON.stringify(page)}</div>
     </>
   );
 };

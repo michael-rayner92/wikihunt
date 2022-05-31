@@ -5,24 +5,30 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
-  useDisclosure
+  ModalOverlay
 } from '@chakra-ui/react';
+import type { UseDisclosureProps } from '@chakra-ui/react';
+import { usePageManager } from '@hooks/usePageManager';
 import { StartInfoBody } from './StartInfoBody';
 
-export const StartInfo: FC = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+interface StartInfoProps {
+  isOpen: UseDisclosureProps['isOpen'];
+  onClose: UseDisclosureProps['onClose'];
+}
 
-  const onStartHandler = () => {
-    console.log('Start The Game!!!');
-    onClose();
+export const StartInfo: FC<StartInfoProps> = ({ isOpen, onClose }) => {
+  const { getPages } = usePageManager();
+
+  const onCloseHandler = () => onClose?.();
+
+  const onStartHandler = async () => {
+    onCloseHandler();
+    await getPages();
   };
 
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
-
-      <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} size="xl">
+      <Modal closeOnOverlayClick={false} isOpen={!!isOpen} onClose={onCloseHandler} size="xl">
         <ModalOverlay />
         <ModalContent top="10">
           <ModalHeader color="blue.500">Welcome to Wikihunt</ModalHeader>
