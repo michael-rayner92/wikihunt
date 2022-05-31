@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
+import { Target } from '@components/target';
 import { wikiApi } from '@services/wikiApi';
 import type { WikiPageContent, WikiRandomPagesListItem } from '@services/wikiApi';
 import type { NextPage } from 'next';
@@ -41,6 +42,8 @@ const Home: NextPage = () => {
   return (
     <div>
       <h1>WikiHunt 🔎</h1>
+
+      <Target />
 
       <ul>
         {pages.map(pageData => (
