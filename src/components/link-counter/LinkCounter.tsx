@@ -14,6 +14,7 @@ import { FiMoreVertical, FiCheckCircle } from 'react-icons/fi';
 import { usePageManager } from '@hooks/usePageManager';
 
 const getCounterColor = (currentCount: number) => {
+  if (currentCount === 0) return 'emphasis';
   if (currentCount <= 3) return 'success';
   if (currentCount <= 5) return 'orange.500';
   return 'error';
@@ -30,6 +31,7 @@ export const LinkCounter: FC = () => {
       <Box
         px={{ base: '4', md: '6' }}
         py={{ base: '5', md: '6' }}
+        h="100%"
         bg="bg-surface"
         borderRadius="lg"
         boxShadow={useColorModeValue('sm', 'sm-dark')}

@@ -35,7 +35,7 @@ export const ArticleViewer: FC = () => {
         ) : (
           <Stack spacing="5" flex="1">
             <Stack spacing="1">
-              <Text fontSize="lg" fontWeight="medium">
+              <Text fontSize="lg" fontWeight="medium" data-testid="active-link-list-title">
                 {page?.title}
               </Text>
               {page?.shortDescription && (
@@ -52,9 +52,14 @@ export const ArticleViewer: FC = () => {
               maxH="30rem"
               overflowY="auto"
               overflowX="hidden"
+              aria-label="article-link-list"
               css={{
-                '&::-webkit-scrollbar': { width: '6px' },
-                '&::-webkit-scrollbar-track': { width: '6px', background: '#eee' },
+                '&::-webkit-scrollbar': { width: '8px' },
+                '&::-webkit-scrollbar-track': {
+                  width: '8px',
+                  background: '#eee',
+                  borderRadius: '24px'
+                },
                 '&::-webkit-scrollbar-thumb': { background: '#3182CE', borderRadius: '24px' }
               }}
             >

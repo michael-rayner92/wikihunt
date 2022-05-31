@@ -27,6 +27,7 @@ export const Step: FC<StepProps> = props => {
       borderTopWidth={{ base: '0', md: '4px' }}
       borderLeftWidth={{ base: '4px', md: '0' }}
       borderColor={borderColor}
+      data-testid={`article-tracker-step-${title}`}
     >
       <Stack spacing="0.5">
         <Text color="emphasized" fontWeight="medium">
