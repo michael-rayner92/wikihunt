@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
+import { StartInfo } from '@components/start-info';
 import { Target } from '@components/target';
 import { wikiApi } from '@services/wikiApi';
 import type { WikiPageContent, WikiRandomPagesListItem } from '@services/wikiApi';
@@ -40,9 +41,8 @@ const Home: NextPage = () => {
   }, [selectedPage]);
 
   return (
-    <div>
-      <h1>WikiHunt 🔎</h1>
-
+    <>
+      <StartInfo />
       <Target />
 
       <ul>
@@ -54,7 +54,7 @@ const Home: NextPage = () => {
       </ul>
 
       <div>{JSON.stringify(page)}</div>
-    </div>
+    </>
   );
 };
 
