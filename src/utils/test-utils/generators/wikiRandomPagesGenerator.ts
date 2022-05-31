@@ -1,13 +1,19 @@
 import type { WikiRandomPagesListItem, WikiRandomPagesApiResponse } from '@services/wikiApi';
 
 const generateWikiRandomPage = (
+  index: number,
   overrides?: Partial<WikiRandomPagesListItem>
 ): WikiRandomPagesListItem => {
-  return { id: 12345671, ns: 0, title: 'Random Page 1', ...overrides };
+  return {
+    ns: 0,
+    id: 12345671 + index,
+    title: `Random Page ${index + 1}`,
+    ...overrides
+  };
 };
 
 export const generateWikiRandomPagesResponse = (number = 5): WikiRandomPagesApiResponse => {
-  const randomPages = Array.from({ length: number }, () => generateWikiRandomPage());
+  const randomPages = Array.from({ length: number }, (_el, index) => generateWikiRandomPage(index));
 
   return {
     batch: '',
