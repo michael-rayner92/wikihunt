@@ -19,6 +19,7 @@ import { FiHelpCircle, FiSearch, FiSettings } from 'react-icons/fi';
 import { Logo } from '@components/logo';
 import { globalEnvs } from '@config/globals';
 import { Sidebar } from '../sidebar/Sidebar';
+import { ThemeToggle } from './ThemeToggle';
 import { ToggleButton } from './ToggleButton';
 
 const { currentUser } = globalEnvs;
@@ -49,6 +50,7 @@ export const Navbar: FC = () => {
                 <IconButton icon={<FiSearch fontSize="1.25rem" />} aria-label="Search" />
                 <IconButton icon={<FiSettings fontSize="1.25rem" />} aria-label="Settings" />
                 <IconButton icon={<FiHelpCircle fontSize="1.25rem" />} aria-label="Help Center" />
+                <ThemeToggle />
               </ButtonGroup>
               <Avatar boxSize="10" name={currentUser.name} src={currentUser.avatarUrl} />
             </HStack>

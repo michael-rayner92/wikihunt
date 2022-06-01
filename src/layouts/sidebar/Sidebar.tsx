@@ -22,6 +22,7 @@ import {
 import { Logo } from '@components/logo';
 import { globalEnvs } from '@config/globals';
 import { NavButton } from '../navbar/NavButton';
+import { ThemeSwitcher } from './ThemeSwitcher';
 import { UserProfile } from './UserProfile';
 
 const { currentUser } = globalEnvs;
@@ -56,6 +57,7 @@ export const Sidebar: FC = () => (
         </Stack>
         <Stack spacing={{ base: '5', sm: '6' }}>
           <Stack spacing="1">
+            <ThemeSwitcher />
             <NavButton label="Help" icon={FiHelpCircle} />
             <NavButton label="Settings" icon={FiSettings} />
           </Stack>
